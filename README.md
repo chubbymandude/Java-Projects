@@ -1,2 +1,13 @@
 # Java-Projects
-Personal Java Projects 
+Personal Java Projects
+
+2024
+
+* RockPaperScissors --> Demonstrates usage of conditionals, loops, static methods, and input
+* Connect4 --> Same as above
+* TicTacToe --> Same as above
+
+2025
+
+* Calculator --> Demonstrates knowledge of prefix/postfix notation and Stack ADT, as well as GUI components
+* SearchAndSortVisualization --> Demonstrates knowledge of threads, GUI, button-handling, and algorithms
