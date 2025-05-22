@@ -11,3 +11,4 @@ Personal Java Projects
 
 * Calculator --> Demonstrates knowledge of prefix/postfix notation and Stack ADT, as well as GUI components
 * SearchAndSortVisualization --> Demonstrates knowledge of threads, GUI, button-handling, and algorithms
+* ClassManager --> Demonstrates knowledge of Data Structures, Class Design, GUI Components and Serialization
