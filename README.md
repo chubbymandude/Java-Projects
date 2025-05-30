@@ -1,5 +1,5 @@
 # Java-Projects
-Personal Java Projects
+These are basic Java projects that I have made in Eclipse. They consist only of Java code and I have uploaded these to show certain skills that I possess with Java coding. 
 
 2024
 
