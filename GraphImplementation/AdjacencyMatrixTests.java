@@ -19,7 +19,7 @@ public class AdjacencyMatrixTests
 	@Test
 	public void basicGraphOperationsTest()
 	{
-		AdjacencyMatrix<String> matrix = new AdjacencyMatrix<>();
+		AdjacencyMatrix<String> matrix = new AdjacencyMatrix<>(10);
 		//Test inserting elements and checking element existence
 		matrix.insertElement("SpongeBob SquarePants");
 		assertTrue(matrix.elementExists("SpongeBob SquarePants"));
@@ -54,7 +54,7 @@ public class AdjacencyMatrixTests
 	@Test
 	public void testKruskalAlgorithm()
 	{
-		AdjacencyMatrix<Character> matrix = new AdjacencyMatrix<>();
+		AdjacencyMatrix<Character> matrix = new AdjacencyMatrix<>(10);
 		
 		//Insert elements
 		matrix.insertElement('A');
@@ -89,7 +89,7 @@ public class AdjacencyMatrixTests
 	@Test
 	public void testPrimAlgorithm()
 	{
-		AdjacencyMatrix<Character> matrix = new AdjacencyMatrix<>();
+		AdjacencyMatrix<Character> matrix = new AdjacencyMatrix<>(10);
 		
 		//Insert elements
 		matrix.insertElement('A');
@@ -121,7 +121,7 @@ public class AdjacencyMatrixTests
 	@Test
 	public void testBFS()
 	{
-		AdjacencyMatrix<String> matrix = new AdjacencyMatrix<>();
+		AdjacencyMatrix<String> matrix = new AdjacencyMatrix<>(10);
 		//Insert elements
 		matrix.insertElement("SpongeBob SquarePants");
 		matrix.insertElement("Patrick Star");
@@ -151,7 +151,7 @@ public class AdjacencyMatrixTests
 	@Test
 	public void testDFS()
 	{
-		AdjacencyMatrix<String> matrix = new AdjacencyMatrix<>();
+		AdjacencyMatrix<String> matrix = new AdjacencyMatrix<>(10);
 		//Insert elements
 		matrix.insertElement("SpongeBob SquarePants");
 		matrix.insertElement("Patrick Star");
@@ -186,7 +186,7 @@ public class AdjacencyMatrixTests
 	@Test
 	public void testDijkstrasAlgorithm()
 	{
-		AdjacencyMatrix<Integer> matrix = new AdjacencyMatrix<>();
+		AdjacencyMatrix<Integer> matrix = new AdjacencyMatrix<>(10);
 		
 		//Insert elements
 		matrix.insertElement(1);
