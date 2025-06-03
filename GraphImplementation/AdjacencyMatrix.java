@@ -89,9 +89,10 @@ public class AdjacencyMatrix<E> implements WeightedGraph<E>
 	private HashMap<E, Integer> elements; 
 	private HashSet<Edge> edges; //Set of the edges 
 	private E randomElement; //Used for ensuring connectivity
+	private int capacity; //Stores the capacity of the graph
 	
 	/*
-	 * Constructs the matrix with a specific max capacity
+	 * Constructs the matrix with a max capacity. No resizing
 	 * 
 	 * Note: The default value of an edge is 0, meaning there is
 	 * no edge at that location. Negative values are not allowed,
@@ -102,6 +103,7 @@ public class AdjacencyMatrix<E> implements WeightedGraph<E>
 		weights = new int[capacity][capacity]; 
 		elements = new HashMap<E, Integer>();
 		edges = new HashSet<>();
+		this.capacity = capacity;
 	}
 	
 	//Method used to determine if an element exists in the graph
@@ -145,10 +147,16 @@ public class AdjacencyMatrix<E> implements WeightedGraph<E>
 	 * 
 	 * If the element already exists in the Map, 
 	 * throw an exception
+	 * 
+	 * If the graph is full, resize it
 	 */
 	@Override
 	public void insertElement(E element) 
 	{
+		if(isFull())
+		{
+			resize();
+		}
 		if(elementExists(element))
 		{
 			throw new IllegalArgumentException
@@ -161,6 +169,23 @@ public class AdjacencyMatrix<E> implements WeightedGraph<E>
 		 * incremented after calling put
 		 */
 		elements.put(element, elements.size()); 
+	}
+	
+	//Doubles the size of the graph
+	private void resize()
+	{
+		//Create a new index with double dimensions
+		int[][] newMatrix = new int[capacity * 2][capacity * 2];
+		//Re-insert the elements in the old matrix to the new matrix
+		for(int row = 0; row < weights.length; row++)
+		{
+			for(int col = 0; col < weights[0].length; col++)
+			{
+				newMatrix[row][col] = weights[row][col];
+			}
+		}
+		//Update references
+		weights = newMatrix;
 	}
 
 	/*
@@ -264,7 +289,8 @@ public class AdjacencyMatrix<E> implements WeightedGraph<E>
 	@Override
 	public boolean isConnected() 
 	{
-		return true;
+		return isEmpty() || 
+		breadthFirstSearch(randomElement).size() == elements.size();
 	}
 
 	//Returns the # of elements in the graph (elements in the set)
@@ -273,11 +299,11 @@ public class AdjacencyMatrix<E> implements WeightedGraph<E>
 	{
 		return elements.size();
 	}
-
-	//Returns whether the matrix is full or not
+	
+	//The matrix is full when all rows have been defined by an element
 	public boolean isFull()
 	{
-		return size() == matrix.length;
+		return size() == capacity;
 	}
 
 	/*
@@ -315,7 +341,8 @@ public class AdjacencyMatrix<E> implements WeightedGraph<E>
 		//Create a DisjointSet of the edges for detecting cycles
 		DisjointSet<E> cycleDetection = new DisjointSet<>(elements.keySet());
 		//Create a WeightedGraph that consists of the MST
-		WeightedGraph<E> minimumSpanningTree = new AdjacencyMatrix<>(elements.size());
+		WeightedGraph<E> minimumSpanningTree = 
+		new AdjacencyMatrix<>(elements.size());
 		//Loop through the edges
 		for(Edge edge : sortedEdges)
 		{
@@ -363,7 +390,8 @@ public class AdjacencyMatrix<E> implements WeightedGraph<E>
 		//Create a PriorityQueue for quick access to the smallest edge
 		PriorityQueue<Edge> edgePicker = new PriorityQueue<>();
 		//Create a WeightedGraph that consists of the MST
-		WeightedGraph<E> minimumSpanningTree = new AdjacencyMatrix<>(elements.size());
+		WeightedGraph<E> minimumSpanningTree = 
+		new AdjacencyMatrix<>(elements.size());
 		//Initially add the current element to the MST
 		minimumSpanningTree.insertElement(currElement);
 		//Loop until the # of vertices of the MST & the graph match
