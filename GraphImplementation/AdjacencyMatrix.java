@@ -91,15 +91,15 @@ public class AdjacencyMatrix<E> implements WeightedGraph<E>
 	private E randomElement; //Used for ensuring connectivity
 	
 	/*
-	 * Constructs the matrix
+	 * Constructs the matrix with a specific max capacity
 	 * 
 	 * Note: The default value of an edge is 0, meaning there is
 	 * no edge at that location. Negative values are not allowed,
 	 * and any positive value means there is an edge between those vertices
 	 */
-	public AdjacencyMatrix()
+	public AdjacencyMatrix(int capacity)
 	{
-		weights = new int[10][10]; //Initial size
+		weights = new int[capacity][capacity]; 
 		elements = new HashMap<E, Integer>();
 		edges = new HashSet<>();
 	}
@@ -274,6 +274,12 @@ public class AdjacencyMatrix<E> implements WeightedGraph<E>
 		return elements.size();
 	}
 
+	//Returns whether the matrix is full or not
+	public boolean isFull()
+	{
+		return size() == matrix.length;
+	}
+
 	/*
 	 * Returns the MST associated with this graph
 	 * 
@@ -309,7 +315,7 @@ public class AdjacencyMatrix<E> implements WeightedGraph<E>
 		//Create a DisjointSet of the edges for detecting cycles
 		DisjointSet<E> cycleDetection = new DisjointSet<>(elements.keySet());
 		//Create a WeightedGraph that consists of the MST
-		WeightedGraph<E> minimumSpanningTree = new AdjacencyMatrix<>();
+		WeightedGraph<E> minimumSpanningTree = new AdjacencyMatrix<>(elements.size());
 		//Loop through the edges
 		for(Edge edge : sortedEdges)
 		{
@@ -357,7 +363,7 @@ public class AdjacencyMatrix<E> implements WeightedGraph<E>
 		//Create a PriorityQueue for quick access to the smallest edge
 		PriorityQueue<Edge> edgePicker = new PriorityQueue<>();
 		//Create a WeightedGraph that consists of the MST
-		WeightedGraph<E> minimumSpanningTree = new AdjacencyMatrix<>();
+		WeightedGraph<E> minimumSpanningTree = new AdjacencyMatrix<>(elements.size());
 		//Initially add the current element to the MST
 		minimumSpanningTree.insertElement(currElement);
 		//Loop until the # of vertices of the MST & the graph match
@@ -618,7 +624,7 @@ public class AdjacencyMatrix<E> implements WeightedGraph<E>
 		 * Create a WeightedGraph that will be used to display 
 		   the graph based on a run-through of Dijkstra's algorithm
 		 */
-		WeightedGraph<E> result = new AdjacencyMap<>();
+		WeightedGraph<E> result = new AdjacencyMatrix<>(elements.size());
 		//Add all the elements to the Graph
 		for(E element : elements.keySet())
 		{
